@@ -1,0 +1,22 @@
+name: Verify portable installation
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install ".[browser,dev]"
+      - run: python -m playwright install --with-deps chromium
+      - run: python -m pytest -q
+      - run: python -m compileall -q src scripts tests install.py mcpb/server
+      - run: python install.py
+      - run: python scripts/build_mcpb.py

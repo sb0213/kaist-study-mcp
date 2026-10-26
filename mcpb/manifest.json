@@ -1,0 +1,36 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/mcpb/main/schemas/mcpb-manifest-v0.3.schema.json",
+  "manifest_version": "0.3",
+  "name": "kaist-study",
+  "display_name": "KAIST Study",
+  "version": "0.3.11",
+  "description": "Personal read-only KAIST study assistant MCP server with KLMS, portal and Dooray adapters.",
+  "author": {
+    "name": "KAIST Study contributors"
+  },
+  "server": {
+    "type": "python",
+    "entry_point": "server/entry.py",
+    "mcp_config": {
+      "command": "${user_config.python_path}",
+      "args": [
+        "${__dirname}/server/entry.py"
+      ]
+    }
+  },
+  "tools_generated": true,
+  "compatibility": {
+    "platforms": ["win32", "darwin", "linux"],
+    "runtimes": {
+      "python": ">=3.12"
+    }
+  },
+  "user_config": {
+    "python_path": {
+      "type": "string",
+      "title": "Installed Python executable",
+      "description": "Run install.py first, then paste the absolute Python executable path it prints. This environment must contain KAIST Study and Playwright. Use your own account and browser profile.",
+      "required": true
+    }
+  }
+}

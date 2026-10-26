@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kaist-study-mcp"
+version = "0.3.11"
+description = "Personal, read-only KAIST study assistant MCP server"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "mcp>=1.13.0,<2",
+  "httpx>=0.27,<1",
+  "beautifulsoup4>=4.12,<5",
+  "pypdf>=5,<7",
+  "python-pptx>=1.0,<2",
+  "platformdirs>=4,<5",
+  "typer>=0.16,<1",
+]
+
+[project.optional-dependencies]
+browser = ["playwright>=1.52,<2"]
+ocr = ["pytesseract>=0.3,<1", "Pillow>=10,<13"]
+dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "respx>=0.22,<1", "ruff>=0.9,<1"]
+
+[project.scripts]
+kaist-study = "kaist_study.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kaist_study"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
